@@ -8,19 +8,6 @@ from PIL import Image, ImageGrab, ImageOps
 import os, os.path
 from numpy import *
 
-#### Control Flow
-#  Open program
-#  press top left button, then click at the spot 
-#  same for bottom right
-#  use those coords with openCV? to know which portion of screen to scan for picture
-#  scan that area for a matching picture to my provided picture
-#  scan on a loop so every frame it checks for the picture
-#    if its too fast maybe wait 1-3 frames before clicking because the fish will
-#    likely have more than 1 frame of 100%
-#  when picture is found click the coord found with third buttom i just thought of
-#  
-
-
 
 class Bot(QWidget):
     x_1 = 1668
@@ -37,7 +24,6 @@ class Bot(QWidget):
         self.initUI()
     
 
-    
     def initUI(self):
         top_left = QPushButton('Top Left coord', self)
         top_left.resize(top_left.sizeHint())
@@ -75,9 +61,6 @@ class Bot(QWidget):
 
 
     def handleTopLeft(self, first_textbox):
-        #this works but is ghetto
-        #input("press a")
-
         time.sleep(1)
         x = p.position()
         x_1 = x[0]  
@@ -100,11 +83,19 @@ class Bot(QWidget):
         catch_y = x[1]
         third_textbox.setText((str(catch_x) + ' ' + str(catch_y)))
     
+
+    '''
+    Currently trying to get image recongition going, the solution right now
+    just checks a specific pixel instead of looking for a picture within a 
+    range of pixels
+    '''
     def beginFishing(self,template):
         caught = 0
         box = (self.x_1,self.y_1,self.x_2,self.y_2)
         
         while caught == 0:
+
+            
             #im = ImageGrab.grab(box)
             #im = ImageGrab.grab()
             #im = Image.open("100small.png")
@@ -118,9 +109,6 @@ class Bot(QWidget):
             #            caught = 1
 
             x = ImageGrab.grab().load()[1678,566]
-            #if im.getpixel((1678,566)) == (77,254,0):
-            #    p.click()   
-            #    caught = 1
             if x == (77,254,0):
                 p.click()
                 caught = 1  
@@ -130,14 +118,8 @@ class Bot(QWidget):
         #pyautogui.click()
 
 
-#help = keyboard.is_pressed('space')
-
 #colorVal = (77, 254, 0)
-#x = 0
-#while x == 0:
-#    p.alert(text='pixeltoCheck found', title='', button='OK')
-#    x = 1
-# hard constants:
+#if i scroll down 7 timse with arrow key, coords to check are 1678,566
     
 
 if __name__ == '__main__':
