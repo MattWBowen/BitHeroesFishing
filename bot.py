@@ -7,6 +7,7 @@ from functools import partial
 from PIL import Image, ImageGrab, ImageOps
 import os, os.path
 from numpy import *
+from imagesearch import *
 
 
 class Bot(QWidget):
@@ -111,7 +112,17 @@ class Bot(QWidget):
             x = ImageGrab.grab().load()[1678,566]
             if x == (77,254,0):
                 p.click()
+                caught = 1
+             '''
+            so this code works and is technically image recog, but is slower, i need
+            to find a way for opencv or PIL to target those coords and search them
+            instead of having the search full screen out of bounds issue
+             
+            pos = imagesearcharea("100small.png",1634,542,1734,589, precision=0.8)
+            if pos[0] != -1:
+                p.click()
                 caught = 1  
+            ''' 
         print('caught')
 
         #pyautogui.moveTo(self.catch_x,self.catch_y)
